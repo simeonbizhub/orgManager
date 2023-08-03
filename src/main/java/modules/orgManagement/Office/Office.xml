@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Office" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="ORG_Office"/>
+    <singularAlias>Office</singularAlias>
+    <pluralAlias>Offices</pluralAlias>
+    <bizKey expression="Office - {levelUnit}"/>
+    <attributes>
+        <text name="levelUnit">
+            <displayName>Level Unit</displayName>
+            <length>200</length>
+        </text>
+        <text name="buildingName">
+            <displayName>Building Name</displayName>
+            <length>200</length>
+        </text>
+        <text name="streetAddress">
+            <displayName>Street Address</displayName>
+            <length>200</length>
+        </text>
+        <text name="suburb">
+            <displayName>Suburb</displayName>
+            <length>200</length>
+        </text>
+        <text name="postCode">
+            <displayName>PostCode</displayName>
+            <length>4</length>
+        </text>
+        <text name="phone">
+            <displayName>Phone</displayName>
+            <length>12</length>
+        </text>
+        <image name="image">
+            <displayName>Image</displayName>
+        </image>
+    </attributes>
+</document>
