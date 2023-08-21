@@ -8,6 +8,7 @@ import org.skyve.domain.Bean;
 import org.skyve.domain.messages.Message;
 import org.skyve.domain.messages.ValidationException;
 import org.skyve.domain.types.DateOnly;
+import org.skyve.domain.types.Timestamp;
 import org.skyve.metadata.controller.ImplicitActionName;
 import org.skyve.metadata.model.document.Bizlet;
 import org.skyve.util.Util;
@@ -15,6 +16,7 @@ import org.skyve.web.WebContext;
 
 import modules.orgManagement.domain.Staff;
 import modules.orgManagement.domain.Staff.CurrentActivity;
+import modules.orgManagement.domain.StaffStatusHistory;
 
 public class StaffBizlet extends Bizlet<StaffExtension> {
 
@@ -38,8 +40,8 @@ public class StaffBizlet extends Bizlet<StaffExtension> {
 	}
 
 	@Override
-	public StaffExtension preExecute(ImplicitActionName actionName, StaffExtension bean, Bean parentBean, WebContext webContext)
-			throws Exception {
+	public StaffExtension preExecute(ImplicitActionName actionName, StaffExtension bean, Bean parentBean,
+			WebContext webContext) throws Exception {
 		// Generate prefix code
 		if (ImplicitActionName.Save.equals(actionName) || ImplicitActionName.OK.equals(actionName)) {
 			if (bean.getCode() == null) {
@@ -48,18 +50,29 @@ public class StaffBizlet extends Bizlet<StaffExtension> {
 				bean.setCode(code);
 			}
 		}
-		if (ImplicitActionName.Edit.equals(actionName))
-		{
+		if (ImplicitActionName.Edit.equals(actionName)) {
 			bean.calculateAgeInYears();
+			bean.calculateStatusHistoryCount();
 		}
 		return super.preExecute(actionName, bean, parentBean, webContext);
 	}
 
 	@Override
 	public void preRerender(String source, StaffExtension bean, WebContext webContext) throws Exception {
-		if (Staff.dateOfBirthPropertyName.equals(source))
-		{
+		if (Staff.dateOfBirthPropertyName.equals(source)) {
 			bean.calculateAgeInYears();
+		} else if (Staff.statusPropertyName.equals(source)) {
+			if (bean.originalValues().keySet().contains(Staff.statusPropertyName)) {
+				if (!bean.originalValues().get(Staff.statusPropertyName).toString().equals(bean.getStatus().toString()))
+				{
+				Util.LOGGER.info("The original value of status was " + (bean.originalValues().get(Staff.statusPropertyName)).toString());
+				StaffStatusHistory newHistory = StaffStatusHistory.newInstance();
+				newHistory.setStatus(bean.getStatus());
+				newHistory.setStatusTimeStamp(new Timestamp());
+				bean.addStatusHistoryElement(0, newHistory);
+				bean.calculateStatusHistoryCount();
+				}
+			}
 		}
 		super.preRerender(source, bean, webContext);
 	}

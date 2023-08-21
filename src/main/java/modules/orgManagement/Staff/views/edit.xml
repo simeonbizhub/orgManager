@@ -62,7 +62,7 @@
 										<onChangedHandlers>
 											<rerender clientValidation="false">
 												<properties>
-													<c:property key="update">vComment</c:property>
+													<c:property key="update">vComment,statusRender</c:property>
 												</properties>
 											</rerender>
 										</onChangedHandlers>
@@ -99,6 +99,22 @@
 					</row>
 				</form>
 			</hbox>
+			<vbox widgetId="statusRender">
+				<form>
+					<column />
+					<column />
+					<row>
+						<item>
+							<textField disabled="true" binding="statusHistoryCount" />
+						</item>
+					</row>
+				</form>
+				<dataGrid binding="statusHistory" showRemove="false"
+					showZoom="false" showEdit="false">
+					<boundColumn binding="status" />
+					<boundColumn binding="statusTimeStamp" />
+				</dataGrid>
+			</vbox>
 		</tab>
 	</tabPane>
 	<actions>

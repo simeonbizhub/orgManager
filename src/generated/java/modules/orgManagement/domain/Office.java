@@ -1,9 +1,12 @@
 package modules.orgManagement.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import modules.orgManagement.Staff.StaffExtension;
 import org.skyve.CORE;
 import org.skyve.domain.messages.DomainException;
 import org.skyve.impl.domain.AbstractPersistentBean;
@@ -49,6 +52,9 @@ public class Office extends AbstractPersistentBean {
 	/** @hidden */
 	public static final String imagePropertyName = "image";
 
+	/** @hidden */
+	public static final String officeStaffPropertyName = "officeStaff";
+
 	/**
 	 * Level Unit
 	 **/
@@ -83,6 +89,11 @@ public class Office extends AbstractPersistentBean {
 	 * Image
 	 **/
 	private String image;
+
+	/**
+	 * Office Staff
+	 **/
+	private List<StaffExtension> officeStaff = new ArrayList<>();
 
 	@Override
 	@XmlTransient
@@ -249,5 +260,77 @@ public class Office extends AbstractPersistentBean {
 	public void setImage(String image) {
 		preset(imagePropertyName, image);
 		this.image = image;
+	}
+
+	/**
+	 * {@link #officeStaff} accessor.
+	 * @return	The value.
+	 **/
+	@XmlElement
+	public List<StaffExtension> getOfficeStaff() {
+		return officeStaff;
+	}
+
+	/**
+	 * {@link #officeStaff} accessor.
+	 * @param bizId	The bizId of the element in the list.
+	 * @return	The value of the element in the list.
+	 **/
+	public StaffExtension getOfficeStaffElementById(String bizId) {
+		return getElementById(officeStaff, bizId);
+	}
+
+	/**
+	 * {@link #officeStaff} mutator.
+	 * @param bizId	The bizId of the element in the list.
+	 * @param element	The new value of the element in the list.
+	 **/
+	public void setOfficeStaffElementById(String bizId, StaffExtension element) {
+		setElementById(officeStaff, element);
+	}
+
+	/**
+	 * {@link #officeStaff} add.
+	 * @param element	The element to add.
+	 **/
+	public boolean addOfficeStaffElement(StaffExtension element) {
+		boolean result = false;
+		if (getElementById(officeStaff, element.getBizId()) == null) {
+			result = officeStaff.add(element);
+		}
+		element.setBaseOffice(this);
+		return result;
+	}
+
+	/**
+	 * {@link #officeStaff} add.
+	 * @param index	The index in the list to add the element to.
+	 * @param element	The element to add.
+	 **/
+	public void addOfficeStaffElement(int index, StaffExtension element) {
+		officeStaff.add(index, element);
+		element.setBaseOffice(this);
+	}
+
+	/**
+	 * {@link #officeStaff} remove.
+	 * @param element	The element to remove.
+	 **/
+	public boolean removeOfficeStaffElement(StaffExtension element) {
+		boolean result = officeStaff.remove(element);
+		if (result) {
+			element.nullBaseOffice();
+		}
+		return result;
+	}
+
+	/**
+	 * {@link #officeStaff} remove.
+	 * @param index	The index in the list to remove the element from.
+	 **/
+	public StaffExtension removeOfficeStaffElement(int index) {
+		StaffExtension result = officeStaff.remove(index);
+		result.nullBaseOffice();
+		return result;
 	}
 }

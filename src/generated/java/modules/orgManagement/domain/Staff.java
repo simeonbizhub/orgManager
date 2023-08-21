@@ -16,6 +16,7 @@ import org.skyve.domain.messages.DomainException;
 import org.skyve.domain.types.DateOnly;
 import org.skyve.domain.types.Enumeration;
 import org.skyve.impl.domain.AbstractPersistentBean;
+import org.skyve.impl.domain.ChangeTrackingArrayList;
 import org.skyve.impl.domain.types.jaxb.DateOnlyMapper;
 import org.skyve.impl.domain.types.jaxb.GeometryMapper;
 import org.skyve.metadata.model.document.Bizlet.DomainValue;
@@ -26,6 +27,7 @@ import org.skyve.util.Util;
  * 
  * @depend - - - Status
  * @depend - - - CurrentActivity
+ * @navcomposed 1 statusHistory 0..n StaffStatusHistory
  * @navhas n baseOffice 0..1 Office
  * @stereotype "persistent"
  */
@@ -70,6 +72,12 @@ public abstract class Staff extends AbstractPersistentBean {
 
 	/** @hidden */
 	public static final String currentActivityPropertyName = "currentActivity";
+
+	/** @hidden */
+	public static final String statusHistoryPropertyName = "statusHistory";
+
+	/** @hidden */
+	public static final String statusHistoryCountPropertyName = "statusHistoryCount";
 
 	/**
 	 * Status
@@ -274,6 +282,16 @@ public abstract class Staff extends AbstractPersistentBean {
 	 **/
 	private CurrentActivity currentActivity;
 
+	/**
+	 * Status History
+	 **/
+	private List<StaffStatusHistory> statusHistory = new ChangeTrackingArrayList<>("statusHistory", this);
+
+	/**
+	 * Status History Count
+	 **/
+	private Integer statusHistoryCount;
+
 	@Override
 	@XmlTransient
 	public String getBizModule() {
@@ -385,7 +403,6 @@ public abstract class Staff extends AbstractPersistentBean {
 	 **/
 	@XmlElement
 	public void setAgeInYears(Integer ageInYears) {
-		preset(ageInYearsPropertyName, ageInYears);
 		this.ageInYears = ageInYears;
 	}
 
@@ -460,8 +477,19 @@ public abstract class Staff extends AbstractPersistentBean {
 	public void setBaseOffice(Office baseOffice) {
 		if (this.baseOffice != baseOffice) {
 			preset(baseOfficePropertyName, baseOffice);
+			Office oldBaseOffice = this.baseOffice;
 			this.baseOffice = baseOffice;
+			if ((baseOffice != null) && (baseOffice.getOfficeStaffElementById(getBizId()) == null)) {
+				baseOffice.getOfficeStaff().add((StaffExtension) this);
+			}
+			if (oldBaseOffice != null) {
+				oldBaseOffice.getOfficeStaff().remove(this);
+			}
 		}
+	}
+
+	public void nullBaseOffice() {
+		this.baseOffice = null;
 	}
 
 	/**
@@ -480,6 +508,94 @@ public abstract class Staff extends AbstractPersistentBean {
 	public void setCurrentActivity(CurrentActivity currentActivity) {
 		preset(currentActivityPropertyName, currentActivity);
 		this.currentActivity = currentActivity;
+	}
+
+	/**
+	 * {@link #statusHistory} accessor.
+	 * @return	The value.
+	 **/
+	@XmlElement
+	public List<StaffStatusHistory> getStatusHistory() {
+		return statusHistory;
+	}
+
+	/**
+	 * {@link #statusHistory} accessor.
+	 * @param bizId	The bizId of the element in the list.
+	 * @return	The value of the element in the list.
+	 **/
+	public StaffStatusHistory getStatusHistoryElementById(String bizId) {
+		return getElementById(statusHistory, bizId);
+	}
+
+	/**
+	 * {@link #statusHistory} mutator.
+	 * @param bizId	The bizId of the element in the list.
+	 * @param element	The new value of the element in the list.
+	 **/
+	public void setStatusHistoryElementById(String bizId, StaffStatusHistory element) {
+		setElementById(statusHistory, element);
+	}
+
+	/**
+	 * {@link #statusHistory} add.
+	 * @param element	The element to add.
+	 **/
+	public boolean addStatusHistoryElement(StaffStatusHistory element) {
+		boolean result = statusHistory.add(element);
+		if (result) {
+			element.setParent((StaffExtension) this);
+		}
+		return result;
+	}
+
+	/**
+	 * {@link #statusHistory} add.
+	 * @param index	The index in the list to add the element to.
+	 * @param element	The element to add.
+	 **/
+	public void addStatusHistoryElement(int index, StaffStatusHistory element) {
+		statusHistory.add(index, element);
+		element.setParent((StaffExtension) this);
+	}
+
+	/**
+	 * {@link #statusHistory} remove.
+	 * @param element	The element to remove.
+	 **/
+	public boolean removeStatusHistoryElement(StaffStatusHistory element) {
+		boolean result = statusHistory.remove(element);
+		if (result) {
+			element.setParent(null);
+		}
+		return result;
+	}
+
+	/**
+	 * {@link #statusHistory} remove.
+	 * @param index	The index in the list to remove the element from.
+	 **/
+	public StaffStatusHistory removeStatusHistoryElement(int index) {
+		StaffStatusHistory result = statusHistory.remove(index);
+		result.setParent(null);
+		return result;
+	}
+
+	/**
+	 * {@link #statusHistoryCount} accessor.
+	 * @return	The value.
+	 **/
+	public Integer getStatusHistoryCount() {
+		return statusHistoryCount;
+	}
+
+	/**
+	 * {@link #statusHistoryCount} mutator.
+	 * @param statusHistoryCount	The new value.
+	 **/
+	@XmlElement
+	public void setStatusHistoryCount(Integer statusHistoryCount) {
+		this.statusHistoryCount = statusHistoryCount;
 	}
 
 	/**

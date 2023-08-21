@@ -18,7 +18,7 @@
 		<date name="dateOfBirth">
 			<displayName>Date of Birth</displayName>
 		</date>
-		<integer name="ageInYears" persistent="false">
+		<integer name="ageInYears" persistent="false" trackChanges="false" audited="false">
 			<displayName>Age in Years</displayName>
 		</integer>
 		<geometry name="location">
@@ -44,13 +44,24 @@
 			<displayName>Current Activity</displayName>
 			<domain>dynamic</domain>
 			<values>
-				<value code="eating"/>
-				<value code="parking"/>
-				<value code="working"/>
-				<value code="meeting"/>
-				<value code="sleeping"/>
+				<value code="eating" />
+				<value code="parking" />
+				<value code="working" />
+				<value code="meeting" />
+				<value code="sleeping" />
 			</values>
 		</enum>
+		<collection name="statusHistory" type="child">
+			<displayName>Status History</displayName>
+			<documentName>StaffStatusHistory</documentName>
+			<minCardinality>0</minCardinality>
+			<ordering>
+				<order sort="descending" by="statusTimeStamp" />
+			</ordering>
+		</collection>
+		<integer name="statusHistoryCount" persistent="false" trackChanges="false" audited="false">
+			<displayName>Status History Count</displayName>
+		</integer>
 	</attributes>
 	<conditions>
 		<condition name="showComment">

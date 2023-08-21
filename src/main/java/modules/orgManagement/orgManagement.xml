@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module xmlns="http://www.skyve.org/xml/module" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" title="Org Management" prototype="true" name="orgManagement" xsi:schemaLocation="http://www.skyve.org/xml/module ../../schemas/module.xsd">
-    <homeRef>list</homeRef>
-    <homeDocument>Office</homeDocument>
-    <documents>
-        <document ref="Office"/>
-        <document ref="Staff"/>
-    </documents>
-    <roles>
-        <role name="Viewer">
-            <description><![CDATA[Enough privileges to view Org Management documents.]]></description>
-            <privileges>
-                <document name="Office" permission="_R__C"/>
-                <document name="Staff" permission="_R__C"/>
-            </privileges>
-            <accesses/>
-        </role>
-        <role name="Maintainer">
-            <description><![CDATA[Enough privileges to create and edit Org Management documents.]]></description>
-            <privileges>
-                <document name="Office" permission="CRUDC"/>
-                <document name="Staff" permission="CRUDC"/>
-            </privileges>
-            <accesses/>
-        </role>
-    </roles>
-    <menu>
-        <list document="Office" name="Offices">
-            <role name="Maintainer"/>
-            <role name="Viewer"/>
-        </list>
-        <list document="Staff" name="Staff">
-            <role name="Maintainer"/>
-            <role name="Viewer"/>
-        </list>
-    </menu>
-    <queries>
-        <query documentName="Staff" name="qStaff">
-            <description><![CDATA[List of Staff]]></description>
-            <columns>
-                <column binding="code"/>
-                <column binding="name"/>
-                <content display="thumbnail" binding="image"/>
-                <column binding="status"/>
-            </columns>
-        </query>
-    </queries>
+<module xmlns="http://www.skyve.org/xml/module"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	title="Org Management" prototype="true" name="orgManagement"
+	xsi:schemaLocation="http://www.skyve.org/xml/module ../../schemas/module.xsd">
+	<homeRef>list</homeRef>
+	<homeDocument>Office</homeDocument>
+	<documents>
+		<document ref="Office" />
+		<document ref="Staff" />
+		<document ref="StaffStatusHistory" />
+	</documents>
+	<roles>
+		<role name="Viewer">
+			<description><![CDATA[Enough privileges to view Org Management documents.]]></description>
+			<privileges>
+				<document name="StaffStatusHistory" permission="_R__C" />
+				<document name="Office" permission="_R__C" />
+				<document name="Staff" permission="_R__C" />
+			</privileges>
+			<accesses />
+		</role>
+		<role name="Maintainer">
+			<description><![CDATA[Enough privileges to create and edit Org Management documents.]]></description>
+			<privileges>
+				<document name="StaffStatusHistory" permission="CRUDC" />
+				<document name="Office" permission="CRUDC" />
+				<document name="Staff" permission="CRUDC" />
+			</privileges>
+			<accesses />
+		</role>
+	</roles>
+	<menu>
+		<list document="Office" name="Offices">
+			<role name="Maintainer" />
+			<role name="Viewer" />
+		</list>
+		<list document="Staff" name="Staff">
+			<role name="Maintainer" />
+			<role name="Viewer" />
+		</list>
+	</menu>
+	<queries>
+		<query documentName="Staff" name="qStaff">
+			<description><![CDATA[List of Staff]]></description>
+			<columns>
+				<column binding="code" />
+				<column binding="name" />
+				<content display="thumbnail" binding="image" />
+				<column binding="status" />
+			</columns>
+		</query>
+	</queries>
 </module>

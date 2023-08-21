@@ -23,4 +23,8 @@ public class StaffExtension extends Staff {
 			this.setAgeInYears(age.getYears());
 		}
 	}
+	
+	public void calculateStatusHistoryCount() {
+		this.setStatusHistoryCount(this.getStatusHistory().size());
+	}
 }
