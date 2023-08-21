@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://www.skyve.org/xml/view"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="edit"
+	title="Office"
+	xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
+	<hbox>
+		<vbox border="true" borderTitle="Address">
+			<form border="true">
+				<column responsiveWidth="4" />
+				<column />
+				<row>
+					<item >
+						<default binding="levelUnit" />
+					</item>
+				</row>
+				<row>
+					<item>
+						<default binding="buildingName" />
+					</item>
+				</row>
+				<row>
+					<item>
+						<default binding="streetAddress" />
+					</item>
+				</row>
+				<row>
+					<item>
+						<default binding="suburb" />
+					</item>
+				</row>
+				<row>
+					<item>
+						<default binding="postCode" />
+					</item>
+				</row>
+				<row>
+					<item>
+						<default binding="phone" />
+					</item>
+				</row>
+			</form>
+		</vbox>
+		<vbox border="true" borderTitle="Profile">
+			<form border="true">
+				<column responsiveWidth="4" />
+				<column />
+				<row>
+					<item>
+						<contentImage binding="image" />
+					</item>
+				</row>
+			</form>
+		</vbox>
+	</hbox>
+	<listGrid continueConversation="true" query="qStaff">
+		<filterParameter operator="equal"
+			filterBinding="baseOffice" valueBinding="bizId" />
+		<filterParameter operator="equal"
+			filterBinding="status" value="in" />
+	</listGrid>
+	<actions>
+		<defaults />
+	</actions>
+	<newParameters />
+</view>

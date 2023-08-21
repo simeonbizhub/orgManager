@@ -112,7 +112,7 @@ public class Office extends AbstractPersistentBean {
 	@XmlTransient
 	public String getBizKey() {
 		try {
-			return org.skyve.util.Binder.formatMessage("Office - {levelUnit}", this);
+			return org.skyve.util.Binder.formatMessage("Office - {levelUnit} {buildingName} {streetAddress}", this);
 		}
 		catch (@SuppressWarnings("unused") Exception e) {
 			return "Unknown";

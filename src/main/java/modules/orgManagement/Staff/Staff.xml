@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Staff"
+	xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+	<persistent name="ORG_Staff" />
+	<singularAlias>Staff</singularAlias>
+	<pluralAlias>Staff</pluralAlias>
+	<bizKey expression="{code}" />
+	<attributes>
+		<text name="code" required="true">
+			<displayName>Code</displayName>
+			<length>50</length>
+		</text>
+		<text name="name">
+			<displayName>Name</displayName>
+			<length>100</length>
+		</text>
+		<date name="dateOfBirth">
+			<displayName>Date of Birth</displayName>
+		</date>
+		<integer name="ageInYears" persistent="false">
+			<displayName>Age in Years</displayName>
+		</integer>
+		<geometry name="location">
+			<displayName>Location</displayName>
+		</geometry>
+		<image name="image">
+			<displayName>Image</displayName>
+		</image>
+		<enum name="status">
+			<displayName>Status</displayName>
+			<values>
+				<value code="In" />
+				<value code="Out" />
+				<value code="Out to Lunch" description="Having Lunch"
+					name="havingLunch" />
+			</values>
+		</enum>
+		<association type="aggregation" name="baseOffice">
+			<displayName>Base Office</displayName>
+			<documentName>Office</documentName>
+		</association>
+		<enum name="currentActivity">
+			<displayName>Current Activity</displayName>
+			<domain>dynamic</domain>
+			<values>
+				<value code="eating"/>
+				<value code="parking"/>
+				<value code="working"/>
+				<value code="meeting"/>
+				<value code="sleeping"/>
+			</values>
+		</enum>
+	</attributes>
+	<conditions>
+		<condition name="showComment">
+			<expression><![CDATA[getStatus() != null && Status.in.equals(getStatus())]]></expression>
+		</condition>
+	</conditions>
+</document>

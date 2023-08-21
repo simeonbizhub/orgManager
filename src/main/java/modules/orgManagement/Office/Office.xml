@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Office" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
-    <persistent name="ORG_Office"/>
+    <persistent name="ORG_Office">
+    	<cache>malcolm</cache>
+    </persistent>
     <singularAlias>Office</singularAlias>
     <pluralAlias>Offices</pluralAlias>
-    <bizKey expression="Office - {levelUnit}"/>
+    <bizKey expression="Office - {levelUnit} {buildingName} {streetAddress}"/>
     <attributes>
         <text name="levelUnit">
             <displayName>Level Unit</displayName>

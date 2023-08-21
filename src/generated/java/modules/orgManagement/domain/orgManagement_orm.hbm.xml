@@ -12,6 +12,7 @@
 	<typedef name="Timestamp" class="org.skyve.impl.domain.types.TimestampUserType" />
 	<typedef name="Enum" class="org.skyve.impl.domain.types.EnumUserType" />
 	<class name="modules.orgManagement.domain.Office" table="ORG_Office" entity-name="orgManagementOffice">
+		<cache usage="read-write" region="malcolm" />
 		<id name="bizId" length="36" />
 		<version name="bizVersion" unsaved-value="null" />
 		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
@@ -33,6 +34,37 @@
 		<filter name="orgManagementOfficeUserIdFilter" condition="bizUserId=:userIdParam"/>
 	</class>
 
+	<class name="modules.orgManagement.Staff.StaffExtension" table="ORG_Staff" entity-name="orgManagementStaff">
+		<id name="bizId" length="36" />
+		<version name="bizVersion" unsaved-value="null" />
+		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+		<property name="bizKey" length="1024" not-null="true" />
+		<property name="bizCustomer" length="50" not-null="true" />
+		<property name="bizFlagComment" length="1024" />
+		<property name="bizDataGroupId" length="36" />
+		<property name="bizUserId" length="36" not-null="true" />
+		<property name="code" length="50" />
+		<property name="name" length="100" />
+		<property name="dateOfBirth" type="DateOnly" />
+		<property name="location" />
+		<property name="image" length="36" />
+		<property name="status" length="12">
+			<type name="Enum">
+				<param name="enumClass">modules.orgManagement.domain.Staff$Status</param>
+			</type>
+		</property>
+		<many-to-one name="baseOffice" entity-name="orgManagementOffice" column="baseOffice_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ORG_Staff_baseOffice"/>
+		<property name="currentActivity" length="8">
+			<type name="Enum">
+				<param name="enumClass">modules.orgManagement.domain.Staff$CurrentActivity</param>
+			</type>
+		</property>
+		<filter name="orgManagementStaffNoneFilter" condition="1=0"/>
+		<filter name="orgManagementStaffCustomerFilter" condition="bizCustomer=:customerParam"/>
+		<filter name="orgManagementStaffDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+		<filter name="orgManagementStaffUserIdFilter" condition="bizUserId=:userIdParam"/>
+	</class>
+
 	<filter-def name="orgManagementOfficeNoneFilter" />
 	<filter-def name="orgManagementOfficeCustomerFilter">
 		<filter-param name="customerParam" type="string"/>
@@ -41,6 +73,16 @@
 		<filter-param name="dataGroupIdParam" type="string"/>
 	</filter-def>
 	<filter-def name="orgManagementOfficeUserIdFilter">
+		<filter-param name="userIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="orgManagementStaffNoneFilter" />
+	<filter-def name="orgManagementStaffCustomerFilter">
+		<filter-param name="customerParam" type="string"/>
+	</filter-def>
+	<filter-def name="orgManagementStaffDataGroupIdFilter">
+		<filter-param name="dataGroupIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="orgManagementStaffUserIdFilter">
 		<filter-param name="userIdParam" type="string"/>
 	</filter-def>
 </hibernate-mapping>

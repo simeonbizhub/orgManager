@@ -4,12 +4,14 @@
     <homeDocument>Office</homeDocument>
     <documents>
         <document ref="Office"/>
+        <document ref="Staff"/>
     </documents>
     <roles>
         <role name="Viewer">
             <description><![CDATA[Enough privileges to view Org Management documents.]]></description>
             <privileges>
                 <document name="Office" permission="_R__C"/>
+                <document name="Staff" permission="_R__C"/>
             </privileges>
             <accesses/>
         </role>
@@ -17,6 +19,7 @@
             <description><![CDATA[Enough privileges to create and edit Org Management documents.]]></description>
             <privileges>
                 <document name="Office" permission="CRUDC"/>
+                <document name="Staff" permission="CRUDC"/>
             </privileges>
             <accesses/>
         </role>
@@ -26,5 +29,20 @@
             <role name="Maintainer"/>
             <role name="Viewer"/>
         </list>
+        <list document="Staff" name="Staff">
+            <role name="Maintainer"/>
+            <role name="Viewer"/>
+        </list>
     </menu>
+    <queries>
+        <query documentName="Staff" name="qStaff">
+            <description><![CDATA[List of Staff]]></description>
+            <columns>
+                <column binding="code"/>
+                <column binding="name"/>
+                <content display="thumbnail" binding="image"/>
+                <column binding="status"/>
+            </columns>
+        </query>
+    </queries>
 </module>

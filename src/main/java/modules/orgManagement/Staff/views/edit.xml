@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://www.skyve.org/xml/view"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="edit"
+	title="Staff" xmlns:c="http://www.skyve.org/xml/common"
+	xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
+	<tabPane>
+		<tab title="Staff Details">
+			<hbox>
+				<vbox border="true" borderTitle="Details">
+					<form>
+						<column responsiveWidth="2" />
+						<column />
+						<row>
+							<item required="false">
+								<default binding="code" />
+							</item>
+						</row>
+						<row>
+							<item>
+								<textField binding="dateOfBirth">
+									<onChangedHandlers>
+										<rerender clientValidation="false">
+											<properties>
+												<c:property key="update">simeonsFavourite</c:property>
+											</properties>
+										</rerender>
+									</onChangedHandlers>
+								</textField>
+							</item>
+						</row>
+					</form>
+					<form widgetId="simeonsFavourite">
+						<column responsiveWidth="2" />
+						<column />
+						<row>
+							<item>
+								<textField binding="ageInYears" disabled="true" />
+							</item>
+						</row>
+					</form>
+					<form>
+						<column responsiveWidth="2" />
+						<column />
+						<row>
+							<item>
+								<contentImage binding="image" />
+							</item>
+						</row>
+						<row>
+							<item>
+								<default binding="name" />
+							</item>
+						</row>
+					</form>
+					<vbox widgetId="vComment">
+						<form>
+							<column responsiveWidth="2" />
+							<column />
+							<row>
+								<item>
+									<combo binding="status">
+										<onChangedHandlers>
+											<rerender clientValidation="false">
+												<properties>
+													<c:property key="update">vComment</c:property>
+												</properties>
+											</rerender>
+										</onChangedHandlers>
+									</combo>
+								</item>
+							</row>
+							<row>
+								<item>
+									<default binding="currentActivity"></default>
+								</item>
+							</row>
+							<row>
+								<item>
+									<lookupDescription
+										descriptionBinding="bizKey" binding="baseOffice"></lookupDescription>
+								</item>
+							</row>
+							<row>
+								<item colspan="2">
+									<blurb escape="false" visible="showComment"><![CDATA[<strong>my name is <em>Simeon</em></strong>]]></blurb>
+								</item>
+							</row>
+						</form>
+					</vbox>
+				</vbox>
+				<form border="true" borderTitle="Location" minPixelHeight="800">
+					<column />
+					<row>
+						<item showLabel="false">
+							<geometryMap binding="location">
+								<onChangedHandlers />
+							</geometryMap>
+						</item>
+					</row>
+				</form>
+			</hbox>
+		</tab>
+	</tabPane>
+	<actions>
+		<defaults></defaults>
+	</actions>
+	<newParameters />
+</view>
