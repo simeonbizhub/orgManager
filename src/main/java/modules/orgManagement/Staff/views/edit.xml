@@ -48,7 +48,7 @@
 						</row>
 						<row>
 							<item>
-								<default binding="name" />
+								<textField binding="name" complete="constrain" />
 							</item>
 						</row>
 					</form>
@@ -119,6 +119,7 @@
 	</tabPane>
 	<actions>
 		<defaults></defaults>
+		<action className="SendHome" displayName="Send Home" clientValidation="false" enabled="showSendHomeButton" />
 	</actions>
 	<newParameters />
 </view>

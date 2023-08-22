@@ -32,6 +32,7 @@
 			<key column="baseOffice_id" />
 			<one-to-many entity-name="orgManagementStaff" />
 		</bag>
+		<property name="boundary" />
 		<filter name="orgManagementOfficeNoneFilter" condition="1=0"/>
 		<filter name="orgManagementOfficeCustomerFilter" condition="bizCustomer=:customerParam"/>
 		<filter name="orgManagementOfficeDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>

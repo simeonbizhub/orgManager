@@ -42,5 +42,8 @@
 			<documentName>Staff</documentName>
 			<referenceName>baseOffice</referenceName>
 		</inverseMany>
+		<geometry name="boundary">
+			<displayName>Boundary</displayName>
+		</geometry>
 	</attributes>
 </document>

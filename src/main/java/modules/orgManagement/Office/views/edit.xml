@@ -9,7 +9,7 @@
 				<column responsiveWidth="4" />
 				<column />
 				<row>
-					<item >
+					<item>
 						<default binding="levelUnit" />
 					</item>
 				</row>
@@ -49,9 +49,15 @@
 						<contentImage binding="image" />
 					</item>
 				</row>
+				<row>
+					<item>
+						<geometryMap binding="boundary"></geometryMap>
+					</item>
+				</row>
 			</form>
 		</vbox>
 	</hbox>
+
 	<listGrid continueConversation="true" query="qStaff">
 		<filterParameter operator="equal"
 			filterBinding="baseOffice" valueBinding="bizId" />

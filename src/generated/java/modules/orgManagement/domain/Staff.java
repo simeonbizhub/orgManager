@@ -616,4 +616,23 @@ public abstract class Staff extends AbstractPersistentBean {
 	public boolean isNotShowComment() {
 		return (! isShowComment());
 	}
+
+	/**
+	 * showSendHomeButton
+	 *
+	 * @return The condition
+	 */
+	@XmlTransient
+	public boolean isShowSendHomeButton() {
+		return (((StaffExtension) this).showSendHomeButton());
+	}
+
+	/**
+	 * {@link #isShowSendHomeButton} negation.
+	 *
+	 * @return The negated condition
+	 */
+	public boolean isNotShowSendHomeButton() {
+		return (! isShowSendHomeButton());
+	}
 }

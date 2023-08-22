@@ -18,7 +18,8 @@
 		<date name="dateOfBirth">
 			<displayName>Date of Birth</displayName>
 		</date>
-		<integer name="ageInYears" persistent="false" trackChanges="false" audited="false">
+		<integer name="ageInYears" persistent="false"
+			trackChanges="false" audited="false">
 			<displayName>Age in Years</displayName>
 		</integer>
 		<geometry name="location">
@@ -59,13 +60,17 @@
 				<order sort="descending" by="statusTimeStamp" />
 			</ordering>
 		</collection>
-		<integer name="statusHistoryCount" persistent="false" trackChanges="false" audited="false">
+		<integer name="statusHistoryCount" persistent="false"
+			trackChanges="false" audited="false">
 			<displayName>Status History Count</displayName>
 		</integer>
 	</attributes>
 	<conditions>
 		<condition name="showComment">
 			<expression><![CDATA[getStatus() != null && Status.in.equals(getStatus())]]></expression>
+		</condition>
+		<condition name="showSendHomeButton">
+			<expression><![CDATA[((StaffExtension) this).showSendHomeButton()]]></expression>
 		</condition>
 	</conditions>
 </document>

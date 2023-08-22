@@ -14,11 +14,26 @@ import org.skyve.metadata.model.document.Bizlet;
 import org.skyve.util.Util;
 import org.skyve.web.WebContext;
 
+import modules.admin.ModulesUtil;
+import modules.orgManagement.domain.Office;
 import modules.orgManagement.domain.Staff;
 import modules.orgManagement.domain.Staff.CurrentActivity;
 import modules.orgManagement.domain.StaffStatusHistory;
 
 public class StaffBizlet extends Bizlet<StaffExtension> {
+
+	@Override
+	public List<String> complete(String attributeName, String value, StaffExtension bean) throws Exception {
+		/*
+		 * List<String> results = new ArrayList<>();
+		 * if(Staff.namePropertyName.equals(attributeName)) { if(value == null) {
+		 * results.add("apple"); results.add("banana"); } else if(value.endsWith("a")) {
+		 * results.add(value + "apple"); } else if(value.endsWith("b")) {
+		 * results.add(value + "banana"); } }
+		 */
+		return ModulesUtil.getCompleteSuggestions(Office.MODULE_NAME, Office.DOCUMENT_NAME, Office.suburbPropertyName, value);
+//		return super.complete(attributeName, value, bean);
+	}
 
 	private static final String STAFF_CODE_PREFIX = "S";
 

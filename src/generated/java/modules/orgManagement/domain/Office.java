@@ -6,10 +6,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import modules.orgManagement.Staff.StaffExtension;
+import org.locationtech.jts.geom.Geometry;
 import org.skyve.CORE;
 import org.skyve.domain.messages.DomainException;
 import org.skyve.impl.domain.AbstractPersistentBean;
+import org.skyve.impl.domain.types.jaxb.GeometryMapper;
 
 /**
  * Office
@@ -55,6 +58,9 @@ public class Office extends AbstractPersistentBean {
 	/** @hidden */
 	public static final String officeStaffPropertyName = "officeStaff";
 
+	/** @hidden */
+	public static final String boundaryPropertyName = "boundary";
+
 	/**
 	 * Level Unit
 	 **/
@@ -94,6 +100,11 @@ public class Office extends AbstractPersistentBean {
 	 * Office Staff
 	 **/
 	private List<StaffExtension> officeStaff = new ArrayList<>();
+
+	/**
+	 * Boundary
+	 **/
+	private Geometry boundary;
 
 	@Override
 	@XmlTransient
@@ -332,5 +343,24 @@ public class Office extends AbstractPersistentBean {
 		StaffExtension result = officeStaff.remove(index);
 		result.nullBaseOffice();
 		return result;
+	}
+
+	/**
+	 * {@link #boundary} accessor.
+	 * @return	The value.
+	 **/
+	public Geometry getBoundary() {
+		return boundary;
+	}
+
+	/**
+	 * {@link #boundary} mutator.
+	 * @param boundary	The new value.
+	 **/
+	@XmlElement
+	@XmlJavaTypeAdapter(GeometryMapper.class)
+	public void setBoundary(Geometry boundary) {
+		preset(boundaryPropertyName, boundary);
+		this.boundary = boundary;
 	}
 }
