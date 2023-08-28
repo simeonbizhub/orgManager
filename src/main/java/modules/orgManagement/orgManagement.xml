@@ -5,6 +5,9 @@
 	xsi:schemaLocation="http://www.skyve.org/xml/module ../../schemas/module.xsd">
 	<homeRef>list</homeRef>
 	<homeDocument>Office</homeDocument>
+	<jobs>
+		<job displayName="Rehome Staff" className="modules.orgManagement.Staff.RehomeJob" name="jobRehomeJob"/>
+	</jobs>
 	<documents>
 		<document ref="Office" />
 		<document ref="Staff" />
