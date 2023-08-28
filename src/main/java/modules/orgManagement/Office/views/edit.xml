@@ -57,7 +57,9 @@
 			</form>
 		</vbox>
 	</hbox>
-
+	<vbox border="true" borderTitle="Map of Office and Staff"> 
+	<map modelName="OfficeMap"/>
+	</vbox>
 	<listGrid continueConversation="true" query="qStaff">
 		<filterParameter operator="equal"
 			filterBinding="baseOffice" valueBinding="bizId" />
