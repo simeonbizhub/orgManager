@@ -3,12 +3,19 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	title="Org Management" prototype="true" name="orgManagement"
 	xsi:schemaLocation="http://www.skyve.org/xml/module ../../schemas/module.xsd">
-	<homeRef>list</homeRef>
-	<homeDocument>Office</homeDocument>
+	<homeRef>edit</homeRef>
+	<homeDocument>Dashboard</homeDocument>
 	<jobs>
-		<job displayName="Rehome Staff" className="modules.orgManagement.Staff.RehomeJob" name="jobRehomeJob"/>
+		<job displayName="Rehome Staff"
+			className="modules.orgManagement.Staff.RehomeJob" name="jobRehomeJob" />
+		<job displayName="Transfer Address Data from Offices"
+			className="modules.orgManagement.Office.TransferLegacyAddressDataJob"
+			name="jobTransferAddressesJob" />
 	</jobs>
 	<documents>
+		<document ref="AbstractLastChanged" />
+		<document ref="Address" />
+		<document ref="Dashboard" />
 		<document ref="Office" />
 		<document ref="Staff" />
 		<document ref="StaffStatusHistory" />
@@ -20,6 +27,8 @@
 				<document name="StaffStatusHistory" permission="_R__C" />
 				<document name="Office" permission="_R__C" />
 				<document name="Staff" permission="_R__C" />
+				<document name="Address" permission="_R__C" />
+				<document name="Dashboard" permission="_____" />
 			</privileges>
 			<accesses />
 		</role>
@@ -31,12 +40,18 @@
 				<document name="Staff" permission="CRUDC">
 					<action name="SendHome" />
 				</document>
+				<document name="Address" permission="CRUDC" />
+				<document name="Dashboard" permission="_____" />
 			</privileges>
 			<accesses />
 		</role>
 	</roles>
 	<menu>
-		<list document="Office" name="Offices">
+		<edit document="Dashboard" name="Dashboard">
+			<role name="Maintainer" />
+			<role name="Viewer" />
+		</edit>
+		<list query="qOffice" name="Offices">
 			<role name="Maintainer" />
 			<role name="Viewer" />
 		</list>
@@ -53,6 +68,18 @@
 				<column binding="name" />
 				<content display="thumbnail" binding="image" />
 				<column binding="status" />
+			</columns>
+		</query>
+		<query documentName="Office" name="qOffice">
+			<description><![CDATA[List of Offices]]></description>
+			<columns>
+				<content display="thumbnail" binding="image" />
+				<column binding="phone" />
+				<column binding="legalAddress.levelUnit" />
+				<column binding="legalAddress.buildingName" />
+				<column binding="legalAddress.suburb" />
+				<column binding="legalAddress.postCode" />
+				<column binding="legalAddress.streetAddress" />
 			</columns>
 		</query>
 	</queries>

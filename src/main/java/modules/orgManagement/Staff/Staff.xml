@@ -2,6 +2,7 @@
 <document xmlns="http://www.skyve.org/xml/document"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Staff"
 	xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+	<extends document="AbstractLastChanged"/>
 	<persistent name="ORG_Staff" />
 	<singularAlias>Staff</singularAlias>
 	<pluralAlias>Staff</pluralAlias>
@@ -40,6 +41,10 @@
 		<association type="aggregation" name="baseOffice">
 			<displayName>Base Office</displayName>
 			<documentName>Office</documentName>
+		</association>
+		<association type="aggregation" name="homeAddress">
+			<displayName>Home Address</displayName>
+			<documentName>Address</documentName>
 		</association>
 		<enum name="currentActivity">
 			<displayName>Current Activity</displayName>

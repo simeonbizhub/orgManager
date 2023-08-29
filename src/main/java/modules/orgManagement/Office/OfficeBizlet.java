@@ -1,12 +1,12 @@
 package modules.orgManagement.Office;
 
-import org.skyve.metadata.model.document.Bizlet;
 import org.skyve.util.Util;
 
+import modules.orgManagement.AbstractLastChanged.AbstractLastChangedBizlet;
 import modules.orgManagement.Staff.StaffExtension;
 import modules.orgManagement.domain.Office;
 
-public class OfficeBizlet extends Bizlet<Office> {
+public class OfficeBizlet extends AbstractLastChangedBizlet<Office> {
 
 	@Override
 	public void preSave(Office bean) throws Exception {

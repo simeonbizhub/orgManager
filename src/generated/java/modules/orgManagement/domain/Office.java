@@ -11,17 +11,19 @@ import modules.orgManagement.Staff.StaffExtension;
 import org.locationtech.jts.geom.Geometry;
 import org.skyve.CORE;
 import org.skyve.domain.messages.DomainException;
-import org.skyve.impl.domain.AbstractPersistentBean;
 import org.skyve.impl.domain.types.jaxb.GeometryMapper;
 
 /**
  * Office
  * 
+ * @navhas n postalAddress 0..1 Address
+ * @navhas n deliveryAddress 0..1 Address
+ * @navhas n legalAddress 0..1 Address
  * @stereotype "persistent"
  */
 @XmlType
 @XmlRootElement
-public class Office extends AbstractPersistentBean {
+public class Office extends AbstractLastChanged {
 	/**
 	 * For Serialization
 	 * @hidden
@@ -29,25 +31,41 @@ public class Office extends AbstractPersistentBean {
 	private static final long serialVersionUID = 1L;
 
 	/** @hidden */
+	@SuppressWarnings("hiding")
 	public static final String MODULE_NAME = "orgManagement";
 
 	/** @hidden */
+	@SuppressWarnings("hiding")
 	public static final String DOCUMENT_NAME = "Office";
 
 	/** @hidden */
+	@Deprecated
 	public static final String levelUnitPropertyName = "levelUnit";
 
 	/** @hidden */
+	@Deprecated
 	public static final String buildingNamePropertyName = "buildingName";
 
 	/** @hidden */
+	@Deprecated
 	public static final String streetAddressPropertyName = "streetAddress";
 
 	/** @hidden */
+	@Deprecated
 	public static final String suburbPropertyName = "suburb";
 
 	/** @hidden */
+	@Deprecated
 	public static final String postCodePropertyName = "postCode";
+
+	/** @hidden */
+	public static final String deliveryAddressPropertyName = "deliveryAddress";
+
+	/** @hidden */
+	public static final String legalAddressPropertyName = "legalAddress";
+
+	/** @hidden */
+	public static final String postalAddressPropertyName = "postalAddress";
 
 	/** @hidden */
 	public static final String phonePropertyName = "phone";
@@ -64,27 +82,47 @@ public class Office extends AbstractPersistentBean {
 	/**
 	 * Level Unit
 	 **/
+	@Deprecated
 	private String levelUnit;
 
 	/**
 	 * Building Name
 	 **/
+	@Deprecated
 	private String buildingName;
 
 	/**
 	 * Street Address
 	 **/
+	@Deprecated
 	private String streetAddress;
 
 	/**
 	 * Suburb
 	 **/
+	@Deprecated
 	private String suburb;
 
 	/**
 	 * PostCode
 	 **/
+	@Deprecated
 	private String postCode;
+
+	/**
+	 * Delivery Address
+	 **/
+	private Address deliveryAddress = null;
+
+	/**
+	 * Legal Address
+	 **/
+	private Address legalAddress = null;
+
+	/**
+	 * Postal Address
+	 **/
+	private Address postalAddress = null;
 
 	/**
 	 * Phone
@@ -151,6 +189,7 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #levelUnit} accessor.
 	 * @return	The value.
 	 **/
+	@Deprecated
 	public String getLevelUnit() {
 		return levelUnit;
 	}
@@ -159,6 +198,7 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #levelUnit} mutator.
 	 * @param levelUnit	The new value.
 	 **/
+	@Deprecated
 	@XmlElement
 	public void setLevelUnit(String levelUnit) {
 		preset(levelUnitPropertyName, levelUnit);
@@ -169,6 +209,7 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #buildingName} accessor.
 	 * @return	The value.
 	 **/
+	@Deprecated
 	public String getBuildingName() {
 		return buildingName;
 	}
@@ -177,6 +218,7 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #buildingName} mutator.
 	 * @param buildingName	The new value.
 	 **/
+	@Deprecated
 	@XmlElement
 	public void setBuildingName(String buildingName) {
 		preset(buildingNamePropertyName, buildingName);
@@ -187,6 +229,7 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #streetAddress} accessor.
 	 * @return	The value.
 	 **/
+	@Deprecated
 	public String getStreetAddress() {
 		return streetAddress;
 	}
@@ -195,6 +238,7 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #streetAddress} mutator.
 	 * @param streetAddress	The new value.
 	 **/
+	@Deprecated
 	@XmlElement
 	public void setStreetAddress(String streetAddress) {
 		preset(streetAddressPropertyName, streetAddress);
@@ -205,6 +249,7 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #suburb} accessor.
 	 * @return	The value.
 	 **/
+	@Deprecated
 	public String getSuburb() {
 		return suburb;
 	}
@@ -213,6 +258,7 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #suburb} mutator.
 	 * @param suburb	The new value.
 	 **/
+	@Deprecated
 	@XmlElement
 	public void setSuburb(String suburb) {
 		preset(suburbPropertyName, suburb);
@@ -223,6 +269,7 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #postCode} accessor.
 	 * @return	The value.
 	 **/
+	@Deprecated
 	public String getPostCode() {
 		return postCode;
 	}
@@ -231,10 +278,71 @@ public class Office extends AbstractPersistentBean {
 	 * {@link #postCode} mutator.
 	 * @param postCode	The new value.
 	 **/
+	@Deprecated
 	@XmlElement
 	public void setPostCode(String postCode) {
 		preset(postCodePropertyName, postCode);
 		this.postCode = postCode;
+	}
+
+	/**
+	 * {@link #deliveryAddress} accessor.
+	 * @return	The value.
+	 **/
+	public Address getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+	/**
+	 * {@link #deliveryAddress} mutator.
+	 * @param deliveryAddress	The new value.
+	 **/
+	@XmlElement
+	public void setDeliveryAddress(Address deliveryAddress) {
+		if (this.deliveryAddress != deliveryAddress) {
+			preset(deliveryAddressPropertyName, deliveryAddress);
+			this.deliveryAddress = deliveryAddress;
+		}
+	}
+
+	/**
+	 * {@link #legalAddress} accessor.
+	 * @return	The value.
+	 **/
+	public Address getLegalAddress() {
+		return legalAddress;
+	}
+
+	/**
+	 * {@link #legalAddress} mutator.
+	 * @param legalAddress	The new value.
+	 **/
+	@XmlElement
+	public void setLegalAddress(Address legalAddress) {
+		if (this.legalAddress != legalAddress) {
+			preset(legalAddressPropertyName, legalAddress);
+			this.legalAddress = legalAddress;
+		}
+	}
+
+	/**
+	 * {@link #postalAddress} accessor.
+	 * @return	The value.
+	 **/
+	public Address getPostalAddress() {
+		return postalAddress;
+	}
+
+	/**
+	 * {@link #postalAddress} mutator.
+	 * @param postalAddress	The new value.
+	 **/
+	@XmlElement
+	public void setPostalAddress(Address postalAddress) {
+		if (this.postalAddress != postalAddress) {
+			preset(postalAddressPropertyName, postalAddress);
+			this.postalAddress = postalAddress;
+		}
 	}
 
 	/**

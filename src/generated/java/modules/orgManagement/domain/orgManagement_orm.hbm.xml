@@ -11,8 +11,76 @@
 	<typedef name="TimeOnly" class="org.skyve.impl.domain.types.TimeOnlyUserType" />
 	<typedef name="Timestamp" class="org.skyve.impl.domain.types.TimestampUserType" />
 	<typedef name="Enum" class="org.skyve.impl.domain.types.EnumUserType" />
-	<class name="modules.orgManagement.domain.Office" table="ORG_Office" entity-name="orgManagementOffice">
-		<cache usage="read-write" region="malcolm" />
+		<class name="modules.orgManagement.domain.Office" table="ORG_Office" entity-name="orgManagementOffice">
+			<cache usage="read-write" region="malcolm" />
+			<id name="bizId" length="36" />
+			<version name="bizVersion" unsaved-value="null" />
+			<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+			<property name="bizKey" length="1024" not-null="true" />
+			<property name="bizCustomer" length="50" not-null="true" />
+			<property name="bizFlagComment" length="1024" />
+			<property name="bizDataGroupId" length="36" />
+			<property name="bizUserId" length="36" not-null="true" />
+			<property name="lastChangedDateTime" type="DateTime" />
+			<property name="levelUnit" length="200" />
+			<property name="buildingName" length="200" />
+			<property name="streetAddress" length="200" />
+			<property name="suburb" length="200" />
+			<property name="postCode" length="4" />
+			<many-to-one name="deliveryAddress" entity-name="orgManagementAddress" column="deliveryAddress_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ORG_Office_deliveryAddress"/>
+			<many-to-one name="legalAddress" entity-name="orgManagementAddress" column="legalAddress_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ORG_Office_legalAddress"/>
+			<many-to-one name="postalAddress" entity-name="orgManagementAddress" column="postalAddress_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ORG_Office_postalAddress"/>
+			<property name="phone" length="12" />
+			<property name="image" length="36" />
+			<bag name="officeStaff" inverse="true">
+				<key column="baseOffice_id" />
+				<one-to-many entity-name="orgManagementStaff" />
+			</bag>
+			<property name="boundary" />
+			<filter name="orgManagementOfficeNoneFilter" condition="1=0"/>
+			<filter name="orgManagementOfficeCustomerFilter" condition="bizCustomer=:customerParam"/>
+			<filter name="orgManagementOfficeDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+			<filter name="orgManagementOfficeUserIdFilter" condition="bizUserId=:userIdParam"/>
+		</class>
+
+		<class name="modules.orgManagement.Staff.StaffExtension" table="ORG_Staff" entity-name="orgManagementStaff">
+			<id name="bizId" length="36" />
+			<version name="bizVersion" unsaved-value="null" />
+			<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+			<property name="bizKey" length="1024" not-null="true" />
+			<property name="bizCustomer" length="50" not-null="true" />
+			<property name="bizFlagComment" length="1024" />
+			<property name="bizDataGroupId" length="36" />
+			<property name="bizUserId" length="36" not-null="true" />
+			<property name="lastChangedDateTime" type="DateTime" />
+			<property name="code" length="50" />
+			<property name="name" length="100" />
+			<property name="dateOfBirth" type="DateOnly" />
+			<property name="location" />
+			<property name="image" length="36" />
+			<property name="status" length="12">
+				<type name="Enum">
+					<param name="enumClass">modules.orgManagement.domain.Staff$Status</param>
+				</type>
+			</property>
+			<many-to-one name="baseOffice" entity-name="orgManagementOffice" column="baseOffice_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ORG_Staff_baseOffice"/>
+			<many-to-one name="homeAddress" entity-name="orgManagementAddress" column="homeAddress_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ORG_Staff_homeAddress"/>
+			<property name="currentActivity" length="8">
+				<type name="Enum">
+					<param name="enumClass">modules.orgManagement.domain.Staff$CurrentActivity</param>
+				</type>
+			</property>
+			<bag name="statusHistory" order-by="statusTimeStamp desc" cascade="all-delete-orphan">
+				<key column="parent_id" />
+				<one-to-many entity-name="orgManagementStaffStatusHistory" />
+			</bag>
+			<filter name="orgManagementStaffNoneFilter" condition="1=0"/>
+			<filter name="orgManagementStaffCustomerFilter" condition="bizCustomer=:customerParam"/>
+			<filter name="orgManagementStaffDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+			<filter name="orgManagementStaffUserIdFilter" condition="bizUserId=:userIdParam"/>
+		</class>
+
+	<class name="modules.orgManagement.domain.Address" table="ORG_Address" entity-name="orgManagementAddress">
 		<id name="bizId" length="36" />
 		<version name="bizVersion" unsaved-value="null" />
 		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
@@ -26,52 +94,10 @@
 		<property name="streetAddress" length="200" />
 		<property name="suburb" length="200" />
 		<property name="postCode" length="4" />
-		<property name="phone" length="12" />
-		<property name="image" length="36" />
-		<bag name="officeStaff" inverse="true">
-			<key column="baseOffice_id" />
-			<one-to-many entity-name="orgManagementStaff" />
-		</bag>
-		<property name="boundary" />
-		<filter name="orgManagementOfficeNoneFilter" condition="1=0"/>
-		<filter name="orgManagementOfficeCustomerFilter" condition="bizCustomer=:customerParam"/>
-		<filter name="orgManagementOfficeDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
-		<filter name="orgManagementOfficeUserIdFilter" condition="bizUserId=:userIdParam"/>
-	</class>
-
-	<class name="modules.orgManagement.Staff.StaffExtension" table="ORG_Staff" entity-name="orgManagementStaff">
-		<id name="bizId" length="36" />
-		<version name="bizVersion" unsaved-value="null" />
-		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
-		<property name="bizKey" length="1024" not-null="true" />
-		<property name="bizCustomer" length="50" not-null="true" />
-		<property name="bizFlagComment" length="1024" />
-		<property name="bizDataGroupId" length="36" />
-		<property name="bizUserId" length="36" not-null="true" />
-		<property name="code" length="50" />
-		<property name="name" length="100" />
-		<property name="dateOfBirth" type="DateOnly" />
-		<property name="location" />
-		<property name="image" length="36" />
-		<property name="status" length="12">
-			<type name="Enum">
-				<param name="enumClass">modules.orgManagement.domain.Staff$Status</param>
-			</type>
-		</property>
-		<many-to-one name="baseOffice" entity-name="orgManagementOffice" column="baseOffice_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ORG_Staff_baseOffice"/>
-		<property name="currentActivity" length="8">
-			<type name="Enum">
-				<param name="enumClass">modules.orgManagement.domain.Staff$CurrentActivity</param>
-			</type>
-		</property>
-		<bag name="statusHistory" order-by="statusTimeStamp desc" cascade="all-delete-orphan">
-			<key column="parent_id" />
-			<one-to-many entity-name="orgManagementStaffStatusHistory" />
-		</bag>
-		<filter name="orgManagementStaffNoneFilter" condition="1=0"/>
-		<filter name="orgManagementStaffCustomerFilter" condition="bizCustomer=:customerParam"/>
-		<filter name="orgManagementStaffDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
-		<filter name="orgManagementStaffUserIdFilter" condition="bizUserId=:userIdParam"/>
+		<filter name="orgManagementAddressNoneFilter" condition="1=0"/>
+		<filter name="orgManagementAddressCustomerFilter" condition="bizCustomer=:customerParam"/>
+		<filter name="orgManagementAddressDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+		<filter name="orgManagementAddressUserIdFilter" condition="bizUserId=:userIdParam"/>
 	</class>
 
 	<class name="modules.orgManagement.domain.StaffStatusHistory" table="ORG_StaffStatusHistory" entity-name="orgManagementStaffStatusHistory">
@@ -114,6 +140,16 @@
 		<filter-param name="dataGroupIdParam" type="string"/>
 	</filter-def>
 	<filter-def name="orgManagementStaffUserIdFilter">
+		<filter-param name="userIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="orgManagementAddressNoneFilter" />
+	<filter-def name="orgManagementAddressCustomerFilter">
+		<filter-param name="customerParam" type="string"/>
+	</filter-def>
+	<filter-def name="orgManagementAddressDataGroupIdFilter">
+		<filter-param name="dataGroupIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="orgManagementAddressUserIdFilter">
 		<filter-param name="userIdParam" type="string"/>
 	</filter-def>
 	<filter-def name="orgManagementStaffStatusHistoryNoneFilter" />

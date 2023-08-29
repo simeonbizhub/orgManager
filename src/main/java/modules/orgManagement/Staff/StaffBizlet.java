@@ -15,12 +15,13 @@ import org.skyve.util.Util;
 import org.skyve.web.WebContext;
 
 import modules.admin.ModulesUtil;
+import modules.orgManagement.AbstractLastChanged.AbstractLastChangedBizlet;
 import modules.orgManagement.domain.Office;
 import modules.orgManagement.domain.Staff;
 import modules.orgManagement.domain.Staff.CurrentActivity;
 import modules.orgManagement.domain.StaffStatusHistory;
 
-public class StaffBizlet extends Bizlet<StaffExtension> {
+public class StaffBizlet extends AbstractLastChangedBizlet<StaffExtension> {
 
 	@Override
 	public List<String> complete(String attributeName, String value, StaffExtension bean) throws Exception {
@@ -78,7 +79,8 @@ public class StaffBizlet extends Bizlet<StaffExtension> {
 			bean.calculateAgeInYears();
 		} else if (Staff.statusPropertyName.equals(source)) {
 			if (bean.originalValues().keySet().contains(Staff.statusPropertyName)) {
-				if (!bean.originalValues().get(Staff.statusPropertyName).toString().equals(bean.getStatus().toString()))
+				Object o = bean.originalValues().get(Staff.statusPropertyName);
+				if (o != null && !o.equals(bean.getStatus()))
 				{
 				Util.LOGGER.info("The original value of status was " + (bean.originalValues().get(Staff.statusPropertyName)).toString());
 				StaffStatusHistory newHistory = StaffStatusHistory.newInstance();

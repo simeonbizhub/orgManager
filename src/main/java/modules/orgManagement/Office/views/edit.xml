@@ -5,40 +5,27 @@
 	xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
 	<hbox>
 		<vbox border="true" borderTitle="Address">
+			<vbox border="true" borderTitle="Delivery Address">
+				<component binding="deliveryAddress" name="_address" />
+			</vbox>
+			<vbox border="true" borderTitle="Postal Address">
+				<component binding="postalAddress" name="_address" />
+			</vbox>
+			<vbox border="true" borderTitle="Legal Address">
+				<component binding="legalAddress" name="_address" />
+			</vbox>
+
 			<form border="true">
 				<column responsiveWidth="4" />
 				<column />
-				<row>
-					<item>
-						<default binding="levelUnit" />
-					</item>
-				</row>
-				<row>
-					<item>
-						<default binding="buildingName" />
-					</item>
-				</row>
-				<row>
-					<item>
-						<default binding="streetAddress" />
-					</item>
-				</row>
-				<row>
-					<item>
-						<default binding="suburb" />
-					</item>
-				</row>
-				<row>
-					<item>
-						<default binding="postCode" />
-					</item>
-				</row>
 				<row>
 					<item>
 						<default binding="phone" />
 					</item>
 				</row>
 			</form>
+			<component document="AbstractLastChanged"
+				name="_lastChangedDisplay" />
 		</vbox>
 		<vbox border="true" borderTitle="Profile">
 			<form border="true">
@@ -57,8 +44,8 @@
 			</form>
 		</vbox>
 	</hbox>
-	<vbox border="true" borderTitle="Map of Office and Staff"> 
-	<map modelName="OfficeMap"/>
+	<vbox border="true" borderTitle="Map of Office and Staff">
+		<map modelName="OfficeMap" />
 	</vbox>
 	<listGrid continueConversation="true" query="qStaff">
 		<filterParameter operator="equal"

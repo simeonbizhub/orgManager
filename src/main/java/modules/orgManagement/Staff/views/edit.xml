@@ -29,6 +29,8 @@
 							</item>
 						</row>
 					</form>
+					<component binding="homeAddress" name="_address" />
+					<component document="AbstractLastChanged" name="_lastChangedDisplay" />
 					<form widgetId="simeonsFavourite">
 						<column responsiveWidth="2" />
 						<column />

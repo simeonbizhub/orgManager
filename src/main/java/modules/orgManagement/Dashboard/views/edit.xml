@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://www.skyve.org/xml/view"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="edit"
+	title="Dashboard"
+	xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
+
+	<chart type="pie">
+		<model categoryBinding="status" moduleName="orgManagement"
+			documentName="Staff" label="Count of Staff" valueBinding="bizId"
+			valueFunction="Count">
+			<noBucket />
+			<top includeOthers="true" sort="ascending" top="3" by="category"/>
+			<order sort="ascending" by="category"/>
+		</model>
+	</chart>
+	<chart type="bar">
+		<model categoryBinding="baseOffice.buildingName" moduleName="orgManagement"
+			documentName="Staff" label="Staff with base office" valueBinding="bizId" 
+			valueFunction="Count">
+			<noBucket />
+			<top includeOthers="true" sort="ascending" top="3" by="category"/>
+			<order sort="ascending" by="category"/>
+		</model>
+	</chart>
+</view>

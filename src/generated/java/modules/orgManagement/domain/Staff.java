@@ -15,7 +15,6 @@ import org.skyve.CORE;
 import org.skyve.domain.messages.DomainException;
 import org.skyve.domain.types.DateOnly;
 import org.skyve.domain.types.Enumeration;
-import org.skyve.impl.domain.AbstractPersistentBean;
 import org.skyve.impl.domain.ChangeTrackingArrayList;
 import org.skyve.impl.domain.types.jaxb.DateOnlyMapper;
 import org.skyve.impl.domain.types.jaxb.GeometryMapper;
@@ -29,11 +28,12 @@ import org.skyve.util.Util;
  * @depend - - - CurrentActivity
  * @navcomposed 1 statusHistory 0..n StaffStatusHistory
  * @navhas n baseOffice 0..1 Office
+ * @navhas n homeAddress 0..1 Address
  * @stereotype "persistent"
  */
 @XmlType
 @XmlRootElement
-public abstract class Staff extends AbstractPersistentBean {
+public abstract class Staff extends AbstractLastChanged {
 	/**
 	 * For Serialization
 	 * @hidden
@@ -41,9 +41,11 @@ public abstract class Staff extends AbstractPersistentBean {
 	private static final long serialVersionUID = 1L;
 
 	/** @hidden */
+	@SuppressWarnings("hiding")
 	public static final String MODULE_NAME = "orgManagement";
 
 	/** @hidden */
+	@SuppressWarnings("hiding")
 	public static final String DOCUMENT_NAME = "Staff";
 
 	/** @hidden */
@@ -69,6 +71,9 @@ public abstract class Staff extends AbstractPersistentBean {
 
 	/** @hidden */
 	public static final String baseOfficePropertyName = "baseOffice";
+
+	/** @hidden */
+	public static final String homeAddressPropertyName = "homeAddress";
 
 	/** @hidden */
 	public static final String currentActivityPropertyName = "currentActivity";
@@ -276,6 +281,11 @@ public abstract class Staff extends AbstractPersistentBean {
 	 * Base Office
 	 **/
 	private Office baseOffice = null;
+
+	/**
+	 * Home Address
+	 **/
+	private Address homeAddress = null;
 
 	/**
 	 * Current Activity
@@ -490,6 +500,26 @@ public abstract class Staff extends AbstractPersistentBean {
 
 	public void nullBaseOffice() {
 		this.baseOffice = null;
+	}
+
+	/**
+	 * {@link #homeAddress} accessor.
+	 * @return	The value.
+	 **/
+	public Address getHomeAddress() {
+		return homeAddress;
+	}
+
+	/**
+	 * {@link #homeAddress} mutator.
+	 * @param homeAddress	The new value.
+	 **/
+	@XmlElement
+	public void setHomeAddress(Address homeAddress) {
+		if (this.homeAddress != homeAddress) {
+			preset(homeAddressPropertyName, homeAddress);
+			this.homeAddress = homeAddress;
+		}
 	}
 
 	/**
