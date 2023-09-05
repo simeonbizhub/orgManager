@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://www.skyve.org/xml/view"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="edit"
+	title="PublicAccessPage"
+	xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
+	<form>
+		<column />
+		<row>
+			<item>
+				<blurb><![CDATA[Welcome to Org Management - Here is a list of offices]]></blurb>
+			</item>
+		</row>
+	</form>
+	<!-- <listGrid query="qAnonymousAddress" continueConversation="true" /> -->
+</view>

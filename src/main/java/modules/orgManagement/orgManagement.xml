@@ -17,6 +17,7 @@
 		<document ref="Address" />
 		<document ref="Dashboard" />
 		<document ref="Office" />
+		<document ref="PublicAccessPage" />
 		<document ref="Staff" />
 		<document ref="StaffStatusHistory" />
 	</documents>
@@ -29,6 +30,7 @@
 				<document name="Staff" permission="_R__C" />
 				<document name="Address" permission="_R__C" />
 				<document name="Dashboard" permission="_____" />
+				<document name="PublicAccessPage" permission="_____" />
 			</privileges>
 			<accesses />
 		</role>
@@ -41,13 +43,30 @@
 					<action name="SendHome" />
 				</document>
 				<document name="Address" permission="CRUDC" />
+				<document name="PublicAccessPage" permission="_____" />
 				<document name="Dashboard" permission="_____" />
 			</privileges>
 			<accesses />
 		</role>
+		<role name="AnonymousAccess">
+			<description><![CDATA[Role used by anonymous actors who want to use public access page]]></description>
+			<privileges>
+				<document name="PublicAccessPage" permission="_____" />
+				<document name="Office" permission="_R__C" />
+				<document name="Address" permission="_R__C" />
+			</privileges>
+			<accesses>
+				<singular document="PublicAccessPage"></singular>
+				<singular document="Address"></singular>
+			</accesses>
+		</role>
 	</roles>
 	<menu>
 		<edit document="Dashboard" name="Dashboard">
+			<role name="Maintainer" />
+			<role name="Viewer" />
+		</edit>
+		<edit document="PublicAccessPage" name="Public Access Page">
 			<role name="Maintainer" />
 			<role name="Viewer" />
 		</edit>
@@ -80,6 +99,16 @@
 				<column binding="legalAddress.suburb" />
 				<column binding="legalAddress.postCode" />
 				<column binding="legalAddress.streetAddress" />
+			</columns>
+		</query>
+		<query documentName="Address" name="qAnonymousAddress">
+			<description><![CDATA[List of Offices]]></description>
+			<columns>
+				<column binding="levelUnit" />
+				<column binding="buildingName" />
+				<column binding="suburb" />
+				<column binding="postCode" />
+				<column binding="streetAddress" />
 			</columns>
 		</query>
 	</queries>
